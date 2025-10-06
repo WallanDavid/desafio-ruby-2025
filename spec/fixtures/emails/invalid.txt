@@ -1,0 +1,2 @@
+This is not a valid .eml file
+It's just a plain text file for testing invalid uploads

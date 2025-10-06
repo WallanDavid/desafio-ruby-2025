@@ -1,0 +1,11 @@
+:verbose: false
+:pidfile: tmp/pids/sidekiq.pid
+:logfile: log/sidekiq.log
+:concurrency: 5
+:queues:
+  - default
+  - mailers
+:schedule:
+  cleanup_logs:
+    cron: '0 2 * * *'  # Daily at 2 AM
+    class: CleanupLogsJob

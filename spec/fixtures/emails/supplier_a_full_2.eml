@@ -1,0 +1,24 @@
+Return-Path: <noreply@fornecedora.com>
+Received: from mail.fornecedora.com (mail.fornecedora.com [192.168.1.100])
+	by mail.example.com (Postfix) with ESMTP id 67890
+	for <customer@example.com>; Tue, 16 Jan 2024 14:45:00 +0000 (UTC)
+Message-ID: <20240116144500.67890@fornecedora.com>
+Date: Tue, 16 Jan 2024 14:45:00 +0000
+From: noreply@fornecedora.com
+To: customer@example.com
+Subject: Confirmação de Pedido - Fornecedora A
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<html>
+<body>
+<h2>Confirmação de Pedido</h2>
+<p>Cliente: Dr. Maria Santos</p>
+<p>E-mail: maria.santos@company.com</p>
+<p>Celular: 11 8888-8888</p>
+<p>Código: ABC-456</p>
+<p>Produto: Gadget Pro</p>
+<p>Status: Confirmado</p>
+</body>
+</html>

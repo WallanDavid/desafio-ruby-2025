@@ -1,0 +1,94 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title mb-0">
+          <i class="bi bi-upload"></i> Upload Email (.eml)
+        </h5>
+      </div>
+      <div class="card-body">
+        <%= form_with url: uploads_path, multipart: true, local: true, class: "needs-validation", novalidate: true do |form| %>
+          <div class="mb-3">
+            <%= form.file_field :file, class: "form-control", accept: ".eml", required: true %>
+            <div class="form-text">
+              Select a .eml file to process. The system will automatically detect the sender and extract customer information.
+            </div>
+          </div>
+          
+          <div class="d-grid">
+            <%= form.submit "Upload and Process", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">
+        <h6 class="card-title mb-0">
+          <i class="bi bi-info-circle"></i> How it works
+        </h6>
+      </div>
+      <div class="card-body">
+        <ol class="small">
+          <li>Upload a .eml file</li>
+          <li>System detects sender domain</li>
+          <li>Appropriate parser extracts data</li>
+          <li>Customer record is created</li>
+          <li>Processing log is saved</li>
+        </ol>
+        
+        <div class="mt-3">
+          <h6>Supported Senders:</h6>
+          <ul class="small">
+            <li><code>@fornecedora.com</code> - Supplier A Parser</li>
+            <li><code>@parceirob.com</code> - Partner B Parser</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if @ingested_emails.any? %>
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">
+            <i class="bi bi-clock-history"></i> Recent Uploads
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th>Sender</th>
+                  <th>Subject</th>
+                  <th>Status</th>
+                  <th>Uploaded</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @ingested_emails.each do |email| %>
+                  <tr>
+                    <td><%= email.sender %></td>
+                    <td><%= truncate(email.subject, length: 50) %></td>
+                    <td>
+                      <span class="badge bg-<%= status_badge_color(email.status) %>">
+                        <%= email.status.humanize %>
+                      </span>
+                    </td>
+                    <td><%= time_ago_in_words(email.created_at) %> ago</td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

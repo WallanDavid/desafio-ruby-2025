@@ -1,0 +1,29 @@
+Return-Path: <contato@parceirob.com>
+Received: from mail.parceirob.com (mail.parceirob.com [192.168.2.100])
+	by mail.example.com (Postfix) with ESMTP id 22222
+	for <customer@example.com>; Thu, 18 Jan 2024 16:20:00 +0000 (UTC)
+Message-ID: <20240118162000.22222@parceirob.com>
+Date: Thu, 18 Jan 2024 16:20:00 +0000
+From: contato@parceirob.com
+To: customer@example.com
+Subject: Solicitação de Produto - Parceiro B
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Olá,
+
+Dados do cliente:
+
+Nome do Cliente: Carlos Mendes
+Email: carlos.mendes@business.com
+Telefone: (21) 99999-9999
+Código do Produto: PARTNER-456
+
+Informações adicionais:
+- Produto: Tool Advanced
+- Categoria: Ferramentas
+- Prioridade: Alta
+
+Obrigado,
+Equipe Parceiro B

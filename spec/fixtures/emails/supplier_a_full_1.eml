@@ -1,0 +1,29 @@
+Return-Path: <noreply@fornecedora.com>
+Received: from mail.fornecedora.com (mail.fornecedora.com [192.168.1.100])
+	by mail.example.com (Postfix) with ESMTP id 12345
+	for <customer@example.com>; Mon, 15 Jan 2024 10:30:00 +0000 (UTC)
+Message-ID: <20240115103000.12345@fornecedora.com>
+Date: Mon, 15 Jan 2024 10:30:00 +0000
+From: noreply@fornecedora.com
+To: customer@example.com
+Subject: Pedido de Produto - Fornecedora A
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Prezado Cliente,
+
+Informações do pedido:
+
+Nome: João Silva
+Email: joao.silva@example.com
+Telefone: (11) 99999-9999
+Código do Produto: PROD-123
+
+Detalhes do pedido:
+- Produto: Widget Premium
+- Quantidade: 2 unidades
+- Valor: R$ 150,00
+
+Atenciosamente,
+Equipe Fornecedora A

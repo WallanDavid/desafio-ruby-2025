@@ -1,0 +1,24 @@
+Return-Path: <contato@parceirob.com>
+Received: from mail.parceirob.com (mail.parceirob.com [192.168.2.100])
+	by mail.example.com (Postfix) with ESMTP id 44444
+	for <customer@example.com>; Sat, 20 Jan 2024 13:45:00 +0000 (UTC)
+Message-ID: <20240120134500.44444@parceirob.com>
+Date: Sat, 20 Jan 2024 13:45:00 +0000
+From: contato@parceirob.com
+To: customer@example.com
+Subject: Dados Incompletos - Parceiro B
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Prezado Cliente,
+
+Informações disponíveis:
+
+Responsável: Roberto Silva
+Código: INCOMPLETE-123
+
+Nota: Informações de contato não disponíveis no momento.
+
+Atenciosamente,
+Parceiro B

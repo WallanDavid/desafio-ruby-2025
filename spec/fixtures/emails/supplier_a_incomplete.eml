@@ -1,0 +1,24 @@
+Return-Path: <noreply@fornecedora.com>
+Received: from mail.fornecedora.com (mail.fornecedora.com [192.168.1.100])
+	by mail.example.com (Postfix) with ESMTP id 11111
+	for <customer@example.com>; Wed, 17 Jan 2024 09:15:00 +0000 (UTC)
+Message-ID: <20240117091500.11111@fornecedora.com>
+Date: Wed, 17 Jan 2024 09:15:00 +0000
+From: noreply@fornecedora.com
+To: customer@example.com
+Subject: Pedido Incompleto - Fornecedora A
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Prezado Cliente,
+
+Informações do pedido:
+
+Nome: Pedro Oliveira
+Código do Produto: INCOMP-789
+
+Observação: Dados de contato não fornecidos.
+
+Atenciosamente,
+Equipe Fornecedora A
