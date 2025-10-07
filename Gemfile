@@ -65,6 +65,7 @@ group :development, :test do
   gem "factory_bot_rails", "~> 6.4"
   gem "faker", "~> 3.2"
   gem "shoulda-matchers", "~> 5.3"
+  gem "database_cleaner-active_record", "~> 2.1"
   
   # Linting gems
   gem "rubocop", "~> 1.50"

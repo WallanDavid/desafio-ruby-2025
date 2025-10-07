@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Uploads", type: :request do
+  include ActiveJob::TestHelper
   describe "GET /" do
     it "returns http success" do
       get root_path
