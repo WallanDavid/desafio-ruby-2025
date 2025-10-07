@@ -27,8 +27,8 @@ module EmailIngestor
     # Don't generate system test files.
     config.generators.system_tests = nil
 
-    # Configure lograge for cleaner logs
-    config.lograge.enabled = true
+    # Configure lograge for cleaner logs (disabled in test)
+    config.lograge.enabled = !Rails.env.test?
     config.lograge.formatter = Lograge::Formatters::Json.new
   end
 end

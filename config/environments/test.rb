@@ -43,8 +43,7 @@ Rails.application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
-  # Use test adapter for ActiveJob in test environment
-  config.active_job.queue_adapter = :test
+  # ActiveJob queue adapter is configured in config/initializers/active_job.rb
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr

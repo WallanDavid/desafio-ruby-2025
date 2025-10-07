@@ -64,7 +64,7 @@ test:
   database: email_ingestor_test
   username: postgres
   password: postgres
-  host: db
+  host: localhost
   port: 5432
 
 # As with config/credentials.yml, you never want to store sensitive information,

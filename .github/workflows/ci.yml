@@ -44,16 +44,8 @@ jobs:
         ruby-version: 3.2.9
         bundler-cache: true
     
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-    
     - name: Install dependencies
-      run: |
-        bundle install
-        npm install
+      run: bundle install
     
     - name: Set up database
       run: |
@@ -62,6 +54,7 @@ jobs:
       env:
         DATABASE_URL: postgresql://postgres:postgres@localhost:5432/email_ingestor_test
         RAILS_ENV: test
+        RAILS_MASTER_KEY: dummy_key_for_testing
     
     - name: Run tests
       run: bundle exec rspec
@@ -69,6 +62,7 @@ jobs:
         DATABASE_URL: postgresql://postgres:postgres@localhost:5432/email_ingestor_test
         REDIS_URL: redis://localhost:6379/0
         RAILS_ENV: test
+        RAILS_MASTER_KEY: dummy_key_for_testing
     
     - name: Run linter
       run: bundle exec rubocop
