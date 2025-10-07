@@ -118,6 +118,26 @@ Código do Produto: PARTNER-456
 
 ## 🧪 Testes
 
+Pré-requisitos: Postgres e Redis rodando localmente.
+
+```bash
+export RAILS_ENV=test
+export DATABASE_URL=postgres://postgres:postgres@localhost:5432/email_ingestor_test
+export REDIS_URL=redis://localhost:6379/0
+
+bundle install
+bundle exec rails db:prepare
+bundle exec rspec
+```
+
+Ou use:
+
+```bash
+bin/ci
+```
+
+### Comandos alternativos
+
 ```bash
 # Executar todos os testes
 make test
