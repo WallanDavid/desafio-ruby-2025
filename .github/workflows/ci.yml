@@ -34,8 +34,9 @@ jobs:
 
     env:
       RAILS_ENV: test
-      DATABASE_URL: postgres://postgres:postgres@localhost:5432/email_ingestor_test
-      REDIS_URL: redis://localhost:6379/0
+      # Use 127.0.0.1 para evitar confusão IPv4/IPv6:
+      DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/email_ingestor_test
+      REDIS_URL: redis://127.0.0.1:6379/0
       RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY || 'dummy_key_for_testing' }}
       DISABLE_SPRING: 1
 
@@ -49,22 +50,41 @@ jobs:
           ruby-version: '3.2.9'
           bundler-cache: true
 
-      - name: System deps
+      - name: System deps (psql client)
         run: |
           sudo apt-get update
-          sudo apt-get install -y libpq-dev
+          sudo apt-get install -y libpq-dev postgresql-client
 
-      - name: Yarn (se existir)
+      - name: Debug conexão Postgres
+        env:
+          PGPASSWORD: postgres
         run: |
-          if [ -f package.json ]; then
-            corepack enable
-            yarn install --frozen-lockfile || true
-          fi
+          echo "Teste de conexão psql..."
+          for i in {1..20}; do
+            if psql -h 127.0.0.1 -U postgres -d email_ingestor_test -c 'select 1;' >/dev/null 2>&1; then
+              echo "OK: Postgres respondeu."
+              break
+            fi
+            echo "Aguardando Postgres subir... tentativas: $i"
+            sleep 2
+          done
+          # Falha dura se não conectar
+          psql -h 127.0.0.1 -U postgres -d email_ingestor_test -c 'select version();'
 
-      - name: Prepare DB
+      - name: Prepare DB (create + migrate) com diagnóstico
         run: |
+          set -e
+          echo "Rails version:"
           bundle exec rails --version
+          echo "== db:prepare =="
           bundle exec rails db:prepare
+
+          echo "== db:version =="
+          bundle exec rails db:version
+
+          echo "== db:migrate:status (preview) =="
+          # Não falha se status retornar código != 0
+          bundle exec rails db:migrate:status || true
 
       - name: RSpec
         run: bundle exec rspec --format documentation
