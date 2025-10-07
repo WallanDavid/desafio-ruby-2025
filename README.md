@@ -122,8 +122,8 @@ Pré-requisitos: Postgres e Redis rodando localmente.
 
 ```bash
 export RAILS_ENV=test
-export DATABASE_URL=postgres://postgres:postgres@localhost:5432/email_ingestor_test
-export REDIS_URL=redis://localhost:6379/0
+export DATABASE_URL=postgres://postgres:postgres@127.0.0.1:5432/email_ingestor_test
+export REDIS_URL=redis://127.0.0.1:6379/0
 export DISABLE_SPRING=1
 
 bundle install
