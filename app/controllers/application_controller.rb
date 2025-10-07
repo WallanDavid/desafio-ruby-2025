@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  # allow_browser versions: :modern # Not available in Rails 7.1
+  # Torna seguro em ambientes onde o gem 'browser' não esteja carregado
+  if defined?(Browser::ActionController)
+    include Browser::ActionController
+    allow_browser versions: :modern if respond_to?(:allow_browser)
+  end
 end

@@ -55,6 +55,7 @@ gem "sidekiq-cron", "~> 1.10"
 gem "lograge", "~> 0.13"
 gem "dotenv-rails", "~> 2.8"
 gem "kaminari", "~> 1.2"
+gem "browser", "~> 6.0"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
