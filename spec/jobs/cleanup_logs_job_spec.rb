@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CleanupLogsJob, type: :job do
+  include ActiveJob::TestHelper
   let(:job) { described_class.new }
 
   describe '#perform' do

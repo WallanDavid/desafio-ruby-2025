@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ProcessEmailJob, type: :job do
+  include ActiveJob::TestHelper
   let(:ingested_email) { create(:ingested_email) }
   let(:job) { described_class.new }
 
