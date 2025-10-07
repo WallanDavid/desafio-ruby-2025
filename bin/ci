@@ -4,6 +4,7 @@ set -euo pipefail
 export RAILS_ENV="${RAILS_ENV:-test}"
 export DATABASE_URL="${DATABASE_URL:-postgres://postgres:postgres@localhost:5432/email_ingestor_test}"
 export REDIS_URL="${REDIS_URL:-redis://localhost:6379/0}"
+export DISABLE_SPRING=1
 
 echo "Ruby: $(ruby -v)"
 echo "Bundler: $(bundle -v)"

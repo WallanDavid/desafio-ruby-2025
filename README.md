@@ -124,6 +124,7 @@ Pré-requisitos: Postgres e Redis rodando localmente.
 export RAILS_ENV=test
 export DATABASE_URL=postgres://postgres:postgres@localhost:5432/email_ingestor_test
 export REDIS_URL=redis://localhost:6379/0
+export DISABLE_SPRING=1
 
 bundle install
 bundle exec rails db:prepare
