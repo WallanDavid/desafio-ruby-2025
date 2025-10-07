@@ -30,5 +30,10 @@ module EmailIngestor
     # Configure lograge for cleaner logs (disabled in test)
     config.lograge.enabled = !Rails.env.test?
     config.lograge.formatter = Lograge::Formatters::Json.new
+    
+    # Disable Sprockets in test environment
+    if Rails.env.test?
+      config.assets.enabled = false
+    end
   end
 end
