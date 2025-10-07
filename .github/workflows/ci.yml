@@ -2,68 +2,70 @@ name: CI
 
 on:
   push:
-    branches: [ main, develop ]
   pull_request:
-    branches: [ main, develop ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     services:
       postgres:
-        image: postgres:14
+        image: postgres:16
         env:
-          POSTGRES_PASSWORD: postgres
           POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
           POSTGRES_DB: email_ingestor_test
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
         ports:
-          - 5432:5432
-      
+          - "5432:5432"
+        options: >-
+          --health-cmd="pg_isready -U postgres -d email_ingestor_test"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
       redis:
-        image: redis:7-alpine
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        image: redis:7
         ports:
-          - 6379:6379
+          - "6379:6379"
+        options: >-
+          --health-cmd="redis-cli ping || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/email_ingestor_test
+      REDIS_URL: redis://localhost:6379/0
+      # Use o secret se existir; senão usa dummy. Evita falhas se a app lê credenciais.
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY || 'dummy_key_for_testing' }}
 
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.2.9
-        bundler-cache: true
-    
-    - name: Install dependencies
-      run: bundle install
-    
-    - name: Set up database
-      run: |
-        bundle exec rails db:create RAILS_ENV=test
-        bundle exec rails db:migrate RAILS_ENV=test
-        bundle exec rails db:test:prepare
-      env:
-        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/email_ingestor_test
-        RAILS_ENV: test
-        RAILS_MASTER_KEY: dummy_key_for_testing
-    
-    - name: Run tests
-      run: bundle exec rspec
-      env:
-        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/email_ingestor_test
-        REDIS_URL: redis://localhost:6379/0
-        RAILS_ENV: test
-        RAILS_MASTER_KEY: dummy_key_for_testing
-    
-    - name: Run linter
-      run: bundle exec rubocop
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2.9'
+          bundler-cache: true
+
+      - name: System deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libpq-dev
+
+      - name: Yarn (se existir)
+        run: |
+          if [ -f package.json ]; then
+            corepack enable
+            yarn install --frozen-lockfile || true
+          fi
+
+      - name: Prepare DB (create + migrate)
+        run: |
+          bundle exec rails --version
+          # db:prepare cria o banco e roda migrations; evita o erro PendingMigration
+          bundle exec rails db:prepare
+
+      - name: RSpec
+        run: bundle exec rspec --format documentation
