@@ -28,7 +28,7 @@ begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
   puts "Running pending migrations..."
-  ActiveRecord::Migration.migrate(ActiveRecord::Migrator.migrations_paths)
+  system("bundle exec rails db:migrate RAILS_ENV=test")
   ActiveRecord::Migration.maintain_test_schema!
 end
 RSpec.configure do |config|
