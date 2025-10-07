@@ -7,6 +7,7 @@ RSpec.describe EmailProcessor do
   describe '#call' do
     context 'when email has valid supplier A content' do
       before do
+        allow(Parsers::SupplierAParser).to receive(:matches?).and_return(true)
         allow_any_instance_of(Parsers::SupplierAParser).to receive(:call).and_return({
           name: 'João Silva',
           email: 'joao@example.com',
@@ -50,6 +51,7 @@ RSpec.describe EmailProcessor do
 
     context 'when email has no contact information' do
       before do
+        allow(Parsers::SupplierAParser).to receive(:matches?).and_return(true)
         allow_any_instance_of(Parsers::SupplierAParser).to receive(:call).and_return({
           name: 'João Silva',
           email: nil,
@@ -82,6 +84,11 @@ RSpec.describe EmailProcessor do
 
     context 'when no parser is found' do
       let(:ingested_email) { create(:ingested_email, :with_unknown_sender, :with_file) }
+      
+      before do
+        allow(Parsers::SupplierAParser).to receive(:matches?).and_return(false)
+        allow(Parsers::PartnerBParser).to receive(:matches?).and_return(false)
+      end
 
       it 'does not create customer' do
         expect { processor.call }.not_to change { Customer.count }

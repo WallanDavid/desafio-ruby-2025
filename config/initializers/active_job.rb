@@ -1,7 +1,4 @@
 Rails.application.configure do
-  # Use Sidekiq as the default job queue adapter
-  config.active_job.queue_adapter = :sidekiq
+  # Use Sidekiq as the default job queue adapter (except in test environment)
+  config.active_job.queue_adapter = Rails.env.test? ? :test : :sidekiq
 end
-
-# Configure ActiveJob for different environments
-Rails.application.config.active_job.queue_adapter = :sidekiq unless Rails.env.test?

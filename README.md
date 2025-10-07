@@ -52,9 +52,12 @@ Um sistema Rails completo para processamento de emails .eml com extração autom
 
 ## 📋 Pré-requisitos
 
-- Docker
-- Docker Compose
+- Docker 20.10+
+- Docker Compose 2.0+
 - Git
+- (Opcional) Make para comandos utilitários
+
+> **Nota**: Para documentação em português, veja [README_PT.md](README_PT.md)
 
 ## 🚀 Instalação e Execução
 

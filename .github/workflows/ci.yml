@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main, develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
 
 jobs:
   test:
@@ -37,46 +37,38 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
+    
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.2.9
         bundler-cache: true
-
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
     - name: Install dependencies
       run: |
-        bundle install --jobs 4 --retry 3
-
-    - name: Set up database
-      env:
-        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/email_ingestor_test
-        REDIS_URL: redis://localhost:6379/0
-        RAILS_ENV: test
-      run: |
-        bundle exec rails db:prepare
-
-    - name: Run linter
-      run: bundle exec rubocop
-
-    - name: Run tests
-      env:
-        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/email_ingestor_test
-        REDIS_URL: redis://localhost:6379/0
-        RAILS_ENV: test
-      run: bundle exec rspec
-
-  lint:
-    runs-on: ubuntu-latest
+        bundle install
+        npm install
     
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.2.9
-        bundler-cache: true
-
-    - name: Run Rubocop
+    - name: Set up database
+      run: |
+        bundle exec rails db:create
+        bundle exec rails db:migrate
+      env:
+        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/email_ingestor_test
+        RAILS_ENV: test
+    
+    - name: Run tests
+      run: bundle exec rspec
+      env:
+        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/email_ingestor_test
+        REDIS_URL: redis://localhost:6379/0
+        RAILS_ENV: test
+    
+    - name: Run linter
       run: bundle exec rubocop

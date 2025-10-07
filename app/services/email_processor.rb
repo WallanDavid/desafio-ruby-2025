@@ -20,7 +20,7 @@ class EmailProcessor
         return
       end
 
-      extracted_data = parser.call(mail)
+      extracted_data = parser.call
       
       if extracted_data[:email].blank? && extracted_data[:phone].blank?
         handle_no_contact_data(parser, extracted_data)
@@ -48,9 +48,11 @@ class EmailProcessor
   def find_parser(mail)
     sender_domain = extract_domain(mail.from&.first)
     
-    PARSERS.find do |parser_class|
-      parser_class.matches?(mail, sender_domain)
+    parser_class = PARSERS.find do |p|
+      p.matches?(mail, sender_domain)
     end
+    
+    parser_class&.new(mail) if parser_class
   end
 
   def extract_domain(email)

@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Customer, type: :model do
   describe 'validations' do
-    it { should validate_presence_of(:email).on(:create) }
-    it { should validate_presence_of(:phone).on(:create) }
+    # Note: Customer requires either email OR phone, not both
     
     it 'validates email format when present' do
       customer = build(:customer, email: 'invalid-email')
@@ -19,8 +18,7 @@ RSpec.describe Customer, type: :model do
     it 'requires at least email or phone' do
       customer = build(:customer, email: nil, phone: nil)
       expect(customer).not_to be_valid
-      expect(customer.errors[:email]).to include("can't be blank")
-      expect(customer.errors[:phone]).to include("can't be blank")
+      expect(customer.errors[:base]).to include("Must have either email or phone")
     end
 
     it 'is valid with email only' do

@@ -1,0 +1,51 @@
+# Git
+.git
+.gitignore
+
+# Logs
+log/*
+tmp/*
+*.log
+
+# Environment files
+.env*
+!.env.example
+
+# Dependencies
+node_modules/
+vendor/bundle/
+
+# Database
+*.sqlite3
+*.sqlite3-journal
+postgres_data/
+
+# Redis
+redis_data/
+
+# Bundle cache
+bundle_cache/
+
+# Storage
+storage/*
+public/uploads/*
+
+# Testing
+coverage/
+.rspec_status
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+LICENSE
