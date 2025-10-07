@@ -36,8 +36,8 @@ jobs:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/email_ingestor_test
       REDIS_URL: redis://localhost:6379/0
-      # Use o secret se existir; senão usa dummy. Evita falhas se a app lê credenciais.
       RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY || 'dummy_key_for_testing' }}
+      DISABLE_SPRING: 1
 
     steps:
       - name: Checkout
@@ -61,10 +61,9 @@ jobs:
             yarn install --frozen-lockfile || true
           fi
 
-      - name: Prepare DB (create + migrate)
+      - name: Prepare DB
         run: |
           bundle exec rails --version
-          # db:prepare cria o banco e roda migrations; evita o erro PendingMigration
           bundle exec rails db:prepare
 
       - name: RSpec
