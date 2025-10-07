@@ -27,9 +27,16 @@ Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f 
 begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
-  puts "Running pending migrations..."
-  system("bundle exec rails db:migrate RAILS_ENV=test")
-  ActiveRecord::Migration.maintain_test_schema!
+  abort <<~MSG
+
+  ❌ Pending migrations detectadas.
+  Rode antes dos testes:
+
+      bundle exec rails db:prepare
+
+  Detalhes:
+  #{e.message}
+  MSG
 end
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
